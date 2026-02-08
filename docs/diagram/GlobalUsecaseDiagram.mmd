@@ -1,0 +1,88 @@
+flowchart LR
+    %% --- ACTEURS ---
+    %% On définit l'ordre pour optimiser le flux vertical
+    Admin[Admin]
+    Company[Recruteur]
+    Alumni[Alumni]
+    Student[Etudiant]
+    Guest[Visiteur]
+    
+    %% Acteur abstrait (caché ou stylisé différemment si besoin)
+    User[Utilisateur Auth]
+
+    %% --- HÉRITAGE ---
+    Guest -.-> User
+    User -.-> Student
+    User -.-> Company
+    User -.-> Admin
+    User -.-> Alumni
+
+    %% --- SYSTÈME ---
+    subgraph JobConnect [Application Job Connect]
+        direction TB
+        
+        %% Zone Compte (Tout le monde)
+        subgraph ZoneAccount [Gestion de Compte]
+            direction TB
+            Register((S'inscrire))
+            Login((Connexion))
+            Profile((Gérer Profil))
+        end
+
+        %% Zone Admin (Haut)
+        subgraph ZoneAdmin [Espace Administration]
+            Valid((Valider Entreprise))
+            Mod((Modérer Offre))
+            Consult((Tableau de bord))
+        end
+
+        %% Zone Offres & Marché (Centre)
+        subgraph ZoneMarket [Marché de l'emploi]
+            Post((Publier Offre))
+            Search((Rechercher))
+            Process((Gérer Recrutement))
+        end
+
+        %% Zone Mentorat (Spécifique Alumni)
+        subgraph ZoneAlumni [Mentorat]
+            Mentor((Devenir Parrain))
+        end
+
+        %% Zone Candidature (Bas)
+        subgraph ZoneStudent [Espace Candidat]
+            Apply((Postuler))
+            Track((Suivre Candidature))
+        end
+    end
+
+    %% --- LIENS ---
+    %% Liens Guest/User
+    Guest --> Register
+    Guest --> Login
+    User --> Profile
+
+    %% Liens Admin
+    Admin --> Consult
+    Admin --> Valid
+    Admin --> Mod
+
+    %% Liens Company
+    Company --> Post
+    Company --> Process
+    Company --> Search
+
+    %% Liens Alumni
+    Alumni --> Post
+    Alumni --> Mentor
+
+    %% Liens Student
+    Student --> Search
+    Student --> Apply
+    Student --> Track
+
+    %% --- STYLES (Optionnel pour la lisibilité) ---
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef usecase fill:#fff,stroke:#333,stroke-width:1px;
+    
+    class Admin,Company,Alumni,Student,Guest,User actor;
+    class Register,Login,Profile,Valid,Mod,Consult,Post,Search,Apply,Track,Process,Mentor usecase;

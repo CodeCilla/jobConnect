@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    
+    actor Student as Étudiant
+    participant Front as Front-End (React)
+    participant API as API (Node.js)
+    participant DB as BDD (PostgreSQL)
+    
+    Note over Student, Front: Scénario : L'étudiant postule à une offre
+
+    Student->>Front: Clique sur "Postuler"
+    
+    Front->>Front: Vérifie présence CV et Token
+    
+    Front->>API: POST /api/applications (OfferID, Token)
+    activate API
+    
+    API->>API: Validation Token (Auth Middleware)
+    
+    %% Vérification doublon
+    API->>DB: SELECT * FROM applications WHERE student_id + offer_id
+    activate DB
+    DB-->>API: Résultat (Vide ou Existant)
+    deactivate DB
+    
+    alt [Déjà postulé]
+        API-->>Front: Erreur 409 (Conflict)
+        Front-->>Student: Message "Vous avez déjà postulé !"
+    
+    else [Nouvelle candidature]
+        API->>DB: INSERT INTO applications (Status: "SENT")
+        activate DB
+        DB-->>API: Confirmation (ID Created)
+        deactivate DB
+        
+        API-->>Front: Succès 201 (Created)
+        
+        Front-->>Student: Notification "Candidature envoyée avec succès"
+        Front->>Front: Mise à jour statut UI (Bouton désactivé)
+    end
+    
+    deactivate API

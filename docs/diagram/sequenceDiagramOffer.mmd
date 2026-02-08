@@ -1,0 +1,47 @@
+sequenceDiagram
+    autonumber
+    actor Entreprise
+    participant Front as Front (React)
+    participant API as API (Back)
+    participant DB as Base de Données
+    actor Admin as Admin Ekod
+
+    Note over Entreprise, DB: Phase 1 : Soumission de l'offre (US-3.1)
+
+    Entreprise->>Front: Remplit le formulaire
+    Entreprise->>Front: Clique sur "Soumettre l'offre"
+    
+    Front->>API: POST /api/offers
+    API->>API: Validation des données
+    
+    Note right of API: Statut forcé à "EN_ATTENTE"
+    API->>DB: INSERT INTO offers (status="PENDING")
+    DB-->>API: Confirm (ID: 42)
+
+    API-->>Front: HTTP 201 Created
+    Front-->>Entreprise: Message "Offre soumise"
+
+    Note over DB, Admin: Phase 2 : Validation par l'Admin (US-5.2)
+
+    Admin->>Front: Dashboard Admin
+    Front->>API: GET /api/admin/pending-offers
+    API->>DB: SELECT * FROM offers WHERE status="PENDING"
+    DB-->>API: Liste des offres
+    API-->>Front: Liste JSON
+    Front-->>Admin: Affiche le tableau
+
+    Admin->>Front: Détails de l'offre #42
+    
+    alt L'Admin VALIDE l'offre
+        Admin->>Front: Clique sur "Valider"
+        Front->>API: PATCH /api/offers/42 {status: "PUBLISHED"}
+        API->>DB: UPDATE offers SET status="PUBLISHED"
+        DB-->>API: OK
+        API-->>Front: HTTP 200 OK
+    else L'Admin REJETTE l'offre
+        Admin->>Front: Clique sur "Rejeter"
+        Front->>API: PATCH /api/offers/42 {status: "REJECTED"}
+        API->>DB: UPDATE offers SET status="REJECTED"
+        DB-->>API: OK
+        API-->>Front: HTTP 200 OK
+    end

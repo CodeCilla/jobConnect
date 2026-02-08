@@ -1,0 +1,36 @@
+flowchart LR
+ subgraph Client_Side["FRONT-END (Netlify)"]
+    direction TB
+        Browser["🖥️ Navigateur Client<br>(React.js / SCSS)"]
+  end
+ subgraph Server_Side["BACK-END (Render)"]
+    direction TB
+        API["⚙️ Serveur API REST<br>(Node.js + Express)"]
+        Auth["🔑 Service Auth<br>(JWT + Bcrypt)"]
+  end
+ subgraph Database["PERSISTANCE (Supabase)"]
+    direction TB
+        Spacer[" "]
+        BDD[("🗄️ Base de Données<br>(PostgreSQL)")]
+  end
+    Spacer ~~~ BDD
+    Browser -- "1. Requête HTTP (JSON)" --> API
+    API -- "2. Validation Token" --> Auth
+    Auth -.-> API
+    API -- "3. Requête SQL" --> BDD
+    BDD -- "4. Données" --> API
+    API -- "5. Réponse JSON" --> Browser
+    Client_Side ~~~ Server_Side
+    Server_Side ~~~ Database
+
+     Browser:::front
+     API:::back
+     Auth:::back
+     Spacer:::hidden
+     BDD:::data
+    classDef front fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:black
+    classDef back fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:black
+    classDef data fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:black
+    classDef hidden display:none
+    style Browser stroke:#2962FF
+    style BDD stroke:#00C853
