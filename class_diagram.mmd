@@ -1,0 +1,137 @@
+classDiagram
+    %% ======================
+    %% Core Domain
+    %% ======================
+
+    class User {
+        +id: int
+        +email: string
+        +password: string
+        +role: Role
+        +displayName: string
+        +bio: string
+        +phone: string
+        +cvUrl: string
+        +website: string
+        +github: string
+        +portfolio: string
+        +logoUrl: string
+        +isAdminValidated: boolean
+        +isMentorAvailable: boolean
+        +isHidden: boolean
+        +cguAccepted: boolean
+    }
+
+    class JobOffer {
+        +jobId: int
+        +title: string
+        +type: JobType
+        +description: text
+        +publicationDate: datetime
+        +status: JobStatus
+        +adminFeedback: string
+    }
+
+    class Application {
+        +applicationId: int
+        +status: ApplicationStatus
+        +appliedAt: datetime
+        +cvSnapshotUrl: string
+        +coverLetter: string
+    }
+
+    class Report {
+        +reportId: int
+        +reason: ReportReason
+        +description: text
+        +reportedAt: datetime
+        +isProcessed: boolean
+    }
+
+    class Skill {
+        +skillId: int
+        +name: string
+    }
+
+    %% ======================
+    %% Association Classes
+    %% ======================
+
+    class UserSkill {
+        +userId: int
+        +skillId: int
+    }
+
+    class JobOfferSkill {
+        +jobId: int
+        +skillId: int
+    }
+
+    %% ======================
+    %% Configuration
+    %% ======================
+
+    class Configuration {
+        +id: int
+        +legalKey: string
+        +cguContent: text
+    }
+
+    %% ======================
+    %% Enums
+    %% ======================
+
+    class Role {
+        <<enum>>
+        STUDENT
+        ALUMNI
+        COMPANY
+        ADMIN
+    }
+
+    class JobType {
+        <<enum>>
+        INTERNSHIP
+        APPRENTICESHIP
+        TECH
+    }
+
+    class JobStatus {
+        <<enum>>
+        PENDING
+        VALIDATED
+        REJECTED
+        CLOSED
+    }
+
+    class ApplicationStatus {
+        <<enum>>
+        RECEIVED
+        INTERVIEW
+        REJECTED
+        VALIDATED
+    }
+
+    class ReportReason {
+        <<enum>>
+        SPAM
+        SCAM
+        INAPPROPRIATE
+    }
+
+    %% ======================
+    %% Relationships
+    %% ======================
+
+    User "1" --> "0..*" JobOffer : posts
+    User "1" --> "0..*" Application : applies
+    JobOffer "1" --> "0..*" Application : receives
+
+    User "1" --> "0..*" Report : reports
+    JobOffer "1" --> "0..*" Report : isReported
+
+    User "1" --> "0..*" UserSkill
+    Skill "1" --> "0..*" UserSkill
+
+    JobOffer "1" --> "0..*" JobOfferSkill
+    Skill "1" --> "0..*" JobOfferSkill
