@@ -1,92 +1,92 @@
 classDiagram
     %% ======================
-    %% Core Domain
+    %% Domaine Métier
     %% ======================
 
-    class User {
+    class Utilisateur {
         +id: int
         +email: string
-        +password: string
+        +motDePasse: string
         +role: Role
-        +displayName: string
+        +nomAffiche: string
         +bio: string
-        +phone: string
-        +cvUrl: string
-        +website: string
+        +telephone: string
+        +urlCV: string
+        +siteWeb: string
         +github: string
         +portfolio: string
-        +logoUrl: string
-        +isAdminValidated: boolean
-        +isMentorAvailable: boolean
-        +isHidden: boolean
-        +cguAccepted: boolean
+        +urlLogo: string
+        +estAdminValide: boolean
+        +estMentorDisponible: boolean
+        +estMasque: boolean
+        +cguAcceptees: boolean
 
-        +register()
-        +login()
-        +updateProfile()
-        +addSkill(skill: Skill)
-        +removeSkill(skill: Skill)
-        +reportJob(job: JobOffer, reason: ReportReason)
+        +sInscrire()
+        +seConnecter()
+        +mettreAJourProfil()
+        +ajouterCompetence(competence: Competence)
+        +retirerCompetence(competence: Competence)
+        +signalerOffre(offre: OffreEmploi, motif: MotifSignalement)
     }
 
-    class JobOffer {
-        +jobId: int
-        +title: string
-        +type: JobType
+    class OffreEmploi {
+        +idOffre: int
+        +titre: string
+        +type: TypeOffre
         +description: text
-        +publicationDate: datetime
-        +status: JobStatus
-        +adminFeedback: string
+        +datePublication: datetime
+        +statut: StatutOffre
+        +retourAdmin: string
 
-        +publish()
-        +update()
-        +close()
-        +validate()
-        +reject(feedback: string)
-        +addSkill(skill: Skill)
-        +removeSkill(skill: Skill)
+        +publier()
+        +modifier()
+        +cloturer()
+        +valider()
+        +rejeter(commentaire: string)
+        +ajouterCompetence(competence: Competence)
+        +retirerCompetence(competence: Competence)
     }
 
-    class Application {
-        +applicationId: int
-        +status: ApplicationStatus
-        +appliedAt: datetime
-        +cvSnapshotUrl: string
-        +coverLetter: string
+    class Candidature {
+        +idCandidature: int
+        +statut: StatutCandidature
+        +dateCandidature: datetime
+        +urlCVSnapshot: string
+        +lettreMotivation: string
 
-        +submit()
-        +updateStatus(status: ApplicationStatus)
-        +withdraw()
+        +postuler()
+        +mettreAJourStatut(statut: StatutCandidature)
+        +retirer()
     }
 
-    class Report {
-        +reportId: int
-        +reason: ReportReason
+    class Signalement {
+        +idSignalement: int
+        +motif: MotifSignalement
         +description: text
-        +reportedAt: datetime
-        +isProcessed: boolean
+        +dateSignalement: datetime
+        +estTraite: boolean
 
-        +create()
-        +markAsProcessed()
+        +creer()
+        +marquerCommeTraite()
     }
 
-    class Skill {
-        +skillId: int
-        +name: string
+    class Competence {
+        +idCompetence: int
+        +nom: string
     }
 
     %% ======================
-    %% Association Classes
+    %% Classes d’association
     %% ======================
 
-    class UserSkill {
-        +userId: int
-        +skillId: int
+    class UtilisateurCompetence {
+        +idUtilisateur: int
+        +idCompetence: int
     }
 
-    class JobOfferSkill {
-        +jobId: int
-        +skillId: int
+    class OffreEmploiCompetence {
+        +idOffre: int
+        +idCompetence: int
     }
 
     %% ======================
@@ -95,67 +95,67 @@ classDiagram
 
     class Configuration {
         +id: int
-        +legalKey: string
-        +cguContent: text
+        +cleLegale: string
+        +contenuCGU: text
 
-        +updateContent()
+        +mettreAJourContenu()
     }
 
     %% ======================
-    %% Enums
+    %% Énumérations
     %% ======================
 
     class Role {
         <<enum>>
-        STUDENT
+        ETUDIANT
         ALUMNI
-        COMPANY
+        ENTREPRISE
         ADMIN
     }
 
-    class JobType {
+    class TypeOffre {
         <<enum>>
-        INTERNSHIP
-        APPRENTICESHIP
+        STAGE
+        ALTERNANCE
         TECH
     }
 
-    class JobStatus {
+    class StatutOffre {
         <<enum>>
-        PENDING
-        VALIDATED
-        REJECTED
-        CLOSED
+        EN_ATTENTE
+        VALIDEE
+        REJETEE
+        CLOTUREE
     }
 
-    class ApplicationStatus {
+    class StatutCandidature {
         <<enum>>
-        RECEIVED
-        INTERVIEW
-        REJECTED
-        VALIDATED
+        RECUE
+        ENTRETIEN
+        REJETEE
+        VALIDEE
     }
 
-    class ReportReason {
+    class MotifSignalement {
         <<enum>>
         SPAM
-        SCAM
-        INAPPROPRIATE
+        ARNAQUE
+        INAPPROPRIE
     }
 
     %% ======================
-    %% Relationships
+    %% Relations
     %% ======================
 
-    User "1" --> "0..*" JobOffer : posts
-    User "1" --> "0..*" Application : applies
-    JobOffer "1" --> "0..*" Application : receives
+    Utilisateur "1" --> "0..*" OffreEmploi : publie
+    Utilisateur "1" --> "0..*" Candidature : postule
+    OffreEmploi "1" --> "0..*" Candidature : recoit
 
-    User "1" --> "0..*" Report : reports
-    JobOffer "1" --> "0..*" Report : isReported
+    Utilisateur "1" --> "0..*" Signalement : signale
+    OffreEmploi "1" --> "0..*" Signalement : estSignalée
 
-    User "1" --> "0..*" UserSkill
-    Skill "1" --> "0..*" UserSkill
+    Utilisateur "1" --> "0..*" UtilisateurCompetence
+    Competence "1" --> "0..*" UtilisateurCompetence
 
-    JobOffer "1" --> "0..*" JobOfferSkill
-    Skill "1" --> "0..*" JobOfferSkill
+    OffreEmploi "1" --> "0..*" OffreEmploiCompetence
+    Competence "1" --> "0..*" OffreEmploiCompetence
