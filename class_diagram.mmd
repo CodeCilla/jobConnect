@@ -20,6 +20,13 @@ classDiagram
         +isMentorAvailable: boolean
         +isHidden: boolean
         +cguAccepted: boolean
+
+        +register()
+        +login()
+        +updateProfile()
+        +addSkill(skill: Skill)
+        +removeSkill(skill: Skill)
+        +reportJob(job: JobOffer, reason: ReportReason)
     }
 
     class JobOffer {
@@ -30,6 +37,14 @@ classDiagram
         +publicationDate: datetime
         +status: JobStatus
         +adminFeedback: string
+
+        +publish()
+        +update()
+        +close()
+        +validate()
+        +reject(feedback: string)
+        +addSkill(skill: Skill)
+        +removeSkill(skill: Skill)
     }
 
     class Application {
@@ -38,6 +53,10 @@ classDiagram
         +appliedAt: datetime
         +cvSnapshotUrl: string
         +coverLetter: string
+
+        +submit()
+        +updateStatus(status: ApplicationStatus)
+        +withdraw()
     }
 
     class Report {
@@ -46,6 +65,9 @@ classDiagram
         +description: text
         +reportedAt: datetime
         +isProcessed: boolean
+
+        +create()
+        +markAsProcessed()
     }
 
     class Skill {
@@ -75,6 +97,8 @@ classDiagram
         +id: int
         +legalKey: string
         +cguContent: text
+
+        +updateContent()
     }
 
     %% ======================
