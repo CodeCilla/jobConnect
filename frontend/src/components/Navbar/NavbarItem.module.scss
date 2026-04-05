@@ -1,0 +1,25 @@
+@use "../../styles/main" as m;
+
+.navLink {
+  @include m.font("base", m.$neutral-700, "medium");
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: m.$color-accent-blue;
+  }
+}
+
+.navButton {
+  @include m.font("base", m.$neutral-0, "bold");
+  background-color: m.$color-accent-blue;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
