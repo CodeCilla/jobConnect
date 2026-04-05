@@ -1,0 +1,12 @@
+@use './color.scss' as color;
+@use './typography.scss' as typography;
+
+@mixin italic {
+  font-style: italic;
+}
+
+@mixin font($size, $color: color.$neutral-900, $weight: regular) {
+  font-size: map-get(typography.$font-size, $size);
+  color: $color;
+  font-weight: map-get(typography.$font-weight, $weight);
+}
