@@ -1,77 +1,86 @@
-@use "../../styles/main" as m;
+@use '../../styles/main' as m;
 
 .navbar {
-    background-color: m.$neutral-0; // Fond blanc
-    border-bottom: 1px solid m.$neutral-200;
-    padding: 0.5rem 0; // Un peu de padding vertical
-    width: 100%;
-}
+  background-color: m.$neutral-0;
+  border-bottom: 1px solid m.$neutral-200;
+  padding: 0.5rem 0;
+  width: 100%;
 
-.navContainer {
-    // Ton mixin flexbox : ligne, espace-entre, centré verticalement
-    @include m.flexbox("row", "between", "center");
-    max-width: 1200px; // Largeur max de ta maquette Desktop
-    margin: 0 auto; // Centre le container
-    padding: 0 2rem; // Padding horizontal pour pas que ça touche les bords
-}
+  &__container {
+    @include m.flexbox('row', 'start', 'center', xs);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
 
-.logo {
-    @include m.flexbox("row", "start", "center", "xs"); // Espace icône/texte
-    text-decoration: none;
-}
+  &__menu {
+    @include m.flexbox('row', 'start', 'center', 'md');
+  }
 
-.icon {
-    font-size: 1.5rem;
-}
-
-.brandName {
-    @include m.font("md", m.$color-accent-blue, "extra-bold"); // Bleu et gras
-}
-
-.navMenu {
-    // Aligne les liens du centre horizontalement
-    @include m.flexbox("row", "center", "center", "md");
-}
-
-.navLink {
-    @include m.font("base", m.$neutral-700, "medium");
+  &__link {
+    @include m.font('base', m.$neutral-700, 'medium');
     text-decoration: none;
     transition: color 0.2s;
 
     &:hover {
-        color: m.$color-accent-blue;
+      color: m.$color-accent-blue;
     }
+  }
+
+  &__actions {
+    @include m.flexbox('row', 'end', 'center', 'xs');
+    margin-left: auto;
+  }
 }
 
-.authButtons {
-    // Aligne les boutons de droite horizontalement
-    @include m.flexbox("row", "end", "center", "sm");
-}
+.logo {
+  @include m.flexbox('row', 'start', 'center', 'xs');
+  text-decoration: none;
 
-// Les styles de boutons s'appliquent sur des balises <a>
-.btnPrimary {
-    @include m.font("base", m.$neutral-0, "bold");
-    background-color: m.$color-accent-blue; // Fond bleu
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px; // Bords arrondis
-    text-decoration: none;
-    transition: background-color 0.2s;
-
-    &:hover {
-        background-color: darken(m.$color-accent-blue, 10%);
-    }
-}
-
-.btnSecondary {
-    @include m.font("base", m.$color-accent-blue, "medium"); // Texte bleu
-    background: none;
-    border: 1px solid m.$color-accent-blue; // Bordure bleue
-    padding: 0.6rem 1.2rem;
+  &__iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: m.$color-accent-blue;
+    width: 32px;
+    height: 32px;
     border-radius: 8px;
-    text-decoration: none;
-    transition: background-color 0.2s;
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    color: m.$neutral-0;
+  }
+
+  &__brand {
+    @include m.font('md', m.$color-accent-blue, 'extra-bold');
+  }
+}
+
+.btn {
+  display: inline-flex;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+
+  &--primary {
+    @include m.font('base', m.$neutral-0, 'bold');
+    background-color: m.$color-accent-blue;
 
     &:hover {
-        background-color: rgba(m.$color-accent-blue, 0.05);
+      background-color: darken(m.$color-accent-blue, 10%);
     }
+  }
+
+  &--secondary {
+    @include m.font('base', m.$color-accent-blue, 'medium');
+    background: none;
+    border: 1px solid m.$color-accent-blue;
+
+    &:hover {
+      background-color: rgba(m.$color-accent-blue, 0.05);
+    }
+  }
 }

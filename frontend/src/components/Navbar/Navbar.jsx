@@ -1,29 +1,30 @@
+import { Briefcase } from 'lucide-react';
 import s from './Navbar.module.scss';
 
 function Navbar() {
     return (
         <nav className={s.navbar}>
-            {/* C'est ce container qui va tout aligner horizontalement */}
-            <div className={s.navContainer}>
+            <div className={s.navbar__container}>
                 
-                {/* 1. Bloc Logo (Gauche) */}
                 <a href="/" className={s.logo}>
-                    <span className={s.icon}>💼</span>
-                    <span className={s.brandName}>JobConnect</span>
+                    <div className={s.logo__iconWrapper}>
+                        <Briefcase 
+                            className={s.logo__icon} 
+                            strokeWidth={2.5} 
+                        />
+                    </div>
+                    <span className={s.logo__brand}>JobConnect</span>
                 </a>
 
-                {/* 2. Bloc Liens (Centre) */}
-                {/* On enlève la balise <ul> qui créait des conflits de style */}
-                <div className={s.navMenu}>
-                    <a href="#" className={s.navLink}>Accueil</a>
-                    <a href="#" className={s.navLink}>Offres d'emploi</a>
-                    <a href="#" className={s.navLink}>Entreprises</a>
+                <div className={s.navbar__menu}>
+                    <a href="#" className={s.navbar__link}>Accueil</a>
+                    <a href="#" className={s.navbar__link}>Offres d'emploi</a>
+                    <a href="#" className={s.navbar__link}>Entreprises</a>
                 </div>
 
-                {/* 3. Bloc Boutons (Droite) */}
-                <div className={s.authButtons}>
-                    <a href="#" className={s.btnSecondary}>Se connecter</a>
-                    <a href="#" className={s.btnPrimary}>S'inscrire</a>
+                <div className={s.navbar__actions}>
+                    <a href="#" className={`${s.btn} ${s['btn--secondary']}`}>Se connecter</a>
+                    <a href="#" className={`${s.btn} ${s['btn--primary']}`}>S'inscrire</a>
                 </div>
             </div>
         </nav>
