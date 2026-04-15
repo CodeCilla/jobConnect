@@ -4,6 +4,7 @@
     @include m.flexbox("column", "center", "center", "sm");
     min-height: 60vh; // Pour centrer visuellement sous la navbar
     padding: 2rem;
+    background-color: m.$neutral-0;
 }
 
 .title {
