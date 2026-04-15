@@ -1,0 +1,25 @@
+@use "../styles/main" as m;
+
+.loginContainer {
+    @include m.flexbox("column", "center", "center");
+    padding: 4rem 1rem;
+}
+
+.card {
+    background-color: m.$neutral-0;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.title {
+    @include m.font("lg", m.$neutral-900, "bold");
+    margin-bottom: 1rem;
+}
+
+.text {
+    @include m.font("base", m.$neutral-400);
+}

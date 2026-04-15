@@ -1,0 +1,39 @@
+$flex: (
+  direction: (
+    row: row,
+    column: column,
+    row-reverse: row-reverse,
+  ),
+  justify: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    space-between: space-between,
+    space-around: space-around,
+  ),
+  align: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    baseline: baseline,
+    stretch: stretch,
+  ),
+  gap: (
+    xs: 1rem,
+    md: 2rem,
+    lg: 4rem,
+  ),
+  wrap: (
+    nowrap: nowrap,
+    wrap: wrap,
+  ),
+);
+
+@mixin flexbox($direction, $justify, $align, $gap: 0, $wrap: nowrap) {
+  display: flex;
+  flex-direction: map-get($flex, direction, $direction);
+  justify-content: map-get($flex, justify, $justify);
+  align-items: map-get($flex, align, $align);
+  gap: map-get($flex, gap, $gap);
+  flex-wrap: map-get($flex, wrap, $wrap);
+}

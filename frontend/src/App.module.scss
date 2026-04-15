@@ -1,0 +1,37 @@
+@use "./styles/main" as m;
+
+.testContainer {
+  // Test du mixin Flexbox (Map imbriquée)
+  @include m.flexbox("column", "center", "center", "sm");
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: m.$neutral-200;
+
+  .card {
+    background-color: m.$neutral-0;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    // Test du mixin Flexbox en ligne pour le contenu
+    @include m.flexbox("row", "between", "center", "md");
+  }
+
+  .title {
+    // Test du mixin Font (Map + couleur accentuée + Extra Bold)
+    @include m.font("h1", m.$color-accent-blue, "extra-bold");
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    // Test du mixin Font avec valeur par défaut (neutral-900)
+    @include m.font("base", $weight: "regular");
+    max-width: 400px;
+  }
+
+  .highlight {
+    // Test de l'accent corail et de l'italique
+    color: m.$color-accent-coral;
+    @include m.italic;
+  }
+}

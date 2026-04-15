@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+$font-main: 'Roboto', sans-serif;
+
+// _typography.scss
+$font-size: (
+  'xs': 0.75rem,
+  'base': 1rem,
+  'md': 1.3rem,
+  'lg': 1.6rem,
+  'h1': 4rem,
+);
+
+$font-weight: (
+  'regular': 400,
+  'medium': 500,
+  'bold': 700,
+  'extra-bold': 800,
+);
+
+// Line-heights pour l'accessibilité
+$line-height-base: 1.5; // Pour le 16px et 12px
+$line-height-tight: 1.1;
